@@ -8,6 +8,29 @@ namespace SharpCompress.Common.Rar.Headers
         {
         }
 
+        internal bool IsRAR5()
+        {
+            if (!(HeadCRC == 0x6152))
+            {
+                return false;
+            }
+            if (!(HeaderType == HeaderType.MarkHeader)) //0x72
+            {
+                return false;
+            }
+            if (!(Flags == 0x1a21))
+            {
+                return false;
+            }
+            if (!(HeaderSize == 0x0107))
+            {
+                return false;
+            }
+            //we are missing a 0x00
+            return true;
+
+        }
+
         internal bool IsValid()
         {
             if (!(HeadCRC == 0x6152))
